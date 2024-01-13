@@ -22,13 +22,19 @@ class  EasyPanel
     }
     public function getCrudConfig($name)
     {
-        $className = ucwords(strtolower($name), '\\');
+        $className = ucwords($name);
         $classNamespace = "\\App\\CRUD\\{$className}Component";
         $classPath = app_path("/CRUD/{$className}Component.php");
+        $isNamespaceExist = class_exists($classNamespace);
+        /***
+         * realpath convert unix to windows path
+         * also if path not exist return false
+         */
+        $isFileExist = realpath($classPath);
         abrot_unless(
-            file_exists($classPath)
+            $isFileExist
             or
-            class_exists($classNamespace),
+            $isNamespaceExist,
             403,
             "We can not find any class with ${name}. It must be in {$className} path or {$classNamespace} namesapce "
         );
