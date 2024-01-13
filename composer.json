@@ -35,7 +35,10 @@
         "laravel" : {
             "providers" : [
                 "EasyPanel\\EasyPanelServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "EasyPanel": "EasyPanel\\Facades\\EasyPanel"
+            }
         }
     },
     "minimum-stability": "dev",

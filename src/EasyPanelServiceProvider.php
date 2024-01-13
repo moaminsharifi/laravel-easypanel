@@ -25,7 +25,7 @@ use Illuminate\{Routing\Router, Support\Facades\Blade, Support\Facades\Route, Su
 use Livewire\Livewire;
 use EasyPanel\Models\PanelAdmin;
 use EasyPanelTest\Dependencies\User;
-
+use EasyPanel\EasyPanel;
 class EasyPanelServiceProvider extends ServiceProvider
 {
     public function register()
@@ -40,6 +40,7 @@ class EasyPanelServiceProvider extends ServiceProvider
 
         // Facades will be set
         $this->defineFacades();
+
     }
 
     public function boot()
@@ -91,6 +92,9 @@ class EasyPanelServiceProvider extends ServiceProvider
         AuthFacade::shouldProxyTo(config('easy_panel.auth_class'));
         UserProviderFacade::shouldProxyTo(config('easy_panel.admin_provider_class'));
         LangManager::shouldProxyTo(config('easy_panel.lang_manager_class'));
+        $this->app->bind('ezPanel', function($app) {
+            return new EasyPanel();
+        });
     }
 
     private function registerMiddlewareAlias()
